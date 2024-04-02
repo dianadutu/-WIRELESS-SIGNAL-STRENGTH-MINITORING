@@ -2,6 +2,8 @@ package com.licenta.wireless.Service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,7 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class NetworkService  implements CommandLineRunner {
+@Order(1) // Asigură-te că aceasta rulează prima
+public class NetworkService  implements CommandLineRunner, Ordered {
 
    /* private String filePath;
 
@@ -26,6 +29,11 @@ public class NetworkService  implements CommandLineRunner {
     }
 
     @Override
+
+    public int getOrder() {
+        return 1; // returnează ordinea
+    }
+
     public void run(String... args) throws Exception {
         System.out.println("Începe procesarea...");
 
