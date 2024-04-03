@@ -1,25 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Network Information</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { text-align: left; padding: 8px; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        th { background-color: #4CAF50; color: white; }
+    </style>
 </head>
 <body>
+
 <h2>Network Information</h2>
-<table id="networksTable">
-    <tr>
-        <th>SSID</th>
-        <th>Network Type</th>
-        <th>Authentication</th>
-        <th>Encryption</th>
-        <!-- Adaugă mai multe coloane după necesitate -->
-    </tr>
-    <!-- Rândurile vor fi adăugate dinamic aici -->
-</table>
 
-<script src="/js/app.js" type="text/javascript"></script>
+<div th:each="network : ${networks}">
+    <table>
+        <tr>
+            <th>SSID</th>
+            <td th:text="${network.ssid}"></td>
+        </tr>
+        <tr>
+            <th>Network Type</th>
+            <td th:text="${network.networkType}"></td>
+        </tr>
+        <tr>
+            <th>Authentication</th>
+            <td th:text="${network.authentication}"></td>
+        </tr>
+        <tr>
+            <th>Encryption</th>
+            <td th:text="${network.encryption}"></td>
+        </tr>
+    </table>
 
+    <h3>BSSID Information</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>BSSID</th>
+            <th>Signal</th>
+            <th>Radio Type</th>
+            <th>Band</th>
+            <th>Channel</th>
+            <th>Connected Stations</th>
+            <th>Channel Utilization</th>
+            <th>Medium Capacity</th>
+            <th>Basic Rates</th>
+            <th>Other Rates</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bssid : ${network.bssids}">
+            <td th:text="${bssid.bssid}"></td>
+            <td th:text="${bssid.signal}"></td>
+            <td th:text="${bssid.radioType}"></td>
+            <td th:text="${bssid.band}"></td>
+            <td th:text="${bssid.channel}"></td>
+            <td th:text="${bssid.connectedStations}"></td>
+            <td th:text="${bssid.channelUtilization}"></td>
+            <td th:text="${bssid.mediumCapacity}"></td>
+            <td th:text="${bssid.basicrates}"></td>
+            <td th:text="${bssid.otherrates}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+</div>
 
 </body>
 </html>
