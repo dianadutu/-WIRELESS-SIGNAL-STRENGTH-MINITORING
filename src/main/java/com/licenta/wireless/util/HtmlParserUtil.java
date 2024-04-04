@@ -124,7 +124,7 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                     network = new NetworkInfo();
                     String ssid = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                     network.setSsid(ssid);
-                }    else  if (trimmedLine.startsWith("Network Type")) {
+                }    else  if (trimmedLine.startsWith("Network type            :")) {
                     String networkType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                     network.setNetworkType(networkType);
                 } else if (trimmedLine.startsWith("Authentication")) {
@@ -146,13 +146,13 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                     if (trimmedLine.startsWith("Signal")) {
                         String signal = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setSignal(signal);
-                    } else if (trimmedLine.startsWith("Radio Type")) {
+                    } else if (trimmedLine.startsWith("Radio type         :")) {
                         String radioType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setRadioType(radioType);
                     } else if (trimmedLine.startsWith("Band")) {
                         String band = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setBand(band);
-                    } else if (trimmedLine.startsWith("Channel")) {
+                    } else if (trimmedLine.startsWith("Channel            :")) {
                         String channel = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setChannel(channel);
 
@@ -162,7 +162,7 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                         if (trimmedLine.startsWith("Connected Stations")) {
                             String connectedStations = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                             currentBssidInfo.setConnectedStations(connectedStations);
-                        } else if (trimmedLine.startsWith("Channel Utilization")) {
+                        } else if (trimmedLine.startsWith("Channel Utilization:")) {
                             String channelUtilization = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                             currentBssidInfo.setChannelUtilization(channelUtilization);
                         } else if (trimmedLine.startsWith("Medium Available Capacity")) {
