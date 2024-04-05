@@ -11,6 +11,13 @@ public class NetworkInfo {
     private String encryption;
     private List<BSSIDInfo> bssids = new ArrayList<>();
 
+
+
+
+
+
+
+
     public NetworkInfo() {}
     public NetworkInfo(String ssid, String networkType, String authentication, String encryption) {
         this.ssid = ssid;

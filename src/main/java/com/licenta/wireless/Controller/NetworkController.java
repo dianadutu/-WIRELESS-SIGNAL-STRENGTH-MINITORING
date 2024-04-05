@@ -1,6 +1,7 @@
 package com.licenta.wireless.Controller;
 
 import com.licenta.wireless.Model.NetworkInfo;
+import com.licenta.wireless.Model.NetworkSummary;
 import com.licenta.wireless.util.HtmlParserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,10 @@ public class NetworkController {
     @GetMapping("/network-page")
     public String showNetworksPage(Model model) {
         List<NetworkInfo> networkInfos = htmlParserUtil.parseHtml();
+        int totalNetworksVisible = networkInfos.size(); // Calculăm numărul total de rețele vizibile
+        NetworkSummary networkSummary = new NetworkSummary(totalNetworksVisible, networkInfos);
+        model.addAttribute("networkSummary", networkSummary); // Adăugăm rezumatul rețelei la model
+
         model.addAttribute("networks", networkInfos);
         return "networks"; // Numele template-ului Thymeleaf
     }

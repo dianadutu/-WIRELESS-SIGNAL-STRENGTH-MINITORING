@@ -1,4 +1,4 @@
-package com.licenta.wireless.Service;
+/*package com.licenta.wireless.Service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -16,11 +16,11 @@ import java.util.regex.Pattern;
 @Order(1) // Asigură-te că aceasta rulează prima
 public class NetworkService  implements CommandLineRunner, Ordered {
 
-   /* private String filePath;
+   // private String filePath;
 
-    public NetworkService (String filePath) {
-        this.filePath = filePath;
-    }*/
+   // public NetworkService (String filePath) {
+     //   this.filePath = filePath;
+    }//
 
     private final String filePath;
 
@@ -164,3 +164,4 @@ public class NetworkService  implements CommandLineRunner, Ordered {
         return output.toString();
     }
 }
+*/

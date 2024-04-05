@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Network Information</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { text-align: left; padding: 8px; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        th { background-color: #4CAF50; color: white; }
-    </style>
+    <link rel="stylesheet" href="/css/networks.css">
+
 </head>
 <body>
 
 <h2>Network Information</h2>
 
-<div th:each="network : ${networks}">
+
+<!-- Afișează numărul total de rețele vizibile -->
+<h3 th:text="'Total Networks Visible: ' + ${networkSummary.totalNetworksVisible}"></h3>
+
+<div th:each="network : ${networks}" class="network-container">
     <table>
-        <tr>
+        <tr class="first-row-highlight">
             <th>SSID</th>
-            <td th:text="${network.ssid}"></td>
+            <td class="ssid-highlight" th:text="${network.ssid}"></td>
         </tr>
         <tr>
             <th>Network Type</th>
@@ -35,10 +34,11 @@
         </tr>
     </table>
 
-    <h3>BSSID Information</h3>
-    <table>
+    <h3 class ="bssid-title">BSSID Information</h3>
+    <table class="table-bssid">
         <thead>
         <tr>
+            <th>No.</th>
             <th>BSSID</th>
             <th>Signal</th>
             <th>Radio Type</th>
@@ -52,7 +52,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="bssid : ${network.bssids}">
+        <tr th:each="bssid, iterStat : ${network.bssids}">
+            <td th:text="${iterStat.count}"></td> <!-- Adaugă această celulă pentru numărul liniei -->
             <td th:text="${bssid.bssid}"></td>
             <td th:text="${bssid.signal}"></td>
             <td th:text="${bssid.radioType}"></td>

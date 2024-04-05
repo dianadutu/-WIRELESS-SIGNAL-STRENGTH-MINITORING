@@ -1,6 +1,7 @@
 package com.licenta.wireless.util;
 
 import com.licenta.wireless.Model.NetworkInfo;
+import com.licenta.wireless.Model.NetworkSummary;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,6 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 @Order(2) // Rulează după NetworkService
@@ -80,12 +83,15 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
             boolean isProcessingBSSID = false;
             //String currentSSID = "";
 
+
+
             // Prelucrare pentru numele interfeței și numărul de rețele
             for (String line : lines) {
                 if (line.trim().startsWith("Interface name")) {
                     System.out.println(line.trim()); // Afișează numele interfeței
                     continue; // Trecem la următoarea linie
                 }
+
                 if (line.trim().matches("There are \\d+ networks currently visible\\.")) {
                     System.out.println(line.trim()); // Afișează numărul de rețele vizibile
                     System.out.println(); // Spațiu pentru lizibilitate
@@ -109,8 +115,27 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                 // Dacă nu suntem în secțiunea dorită, nu procesăm linia curentă
                 if (!inTargetSection) continue;
 
+                //AFISARE RETELE VIZIBILE -------------------------------
 
+                Pattern pattern = Pattern.compile("There are (\\d+) networks currently visible\\.");
+                Matcher matcher = pattern.matcher(trimmedLine);
 
+                if (matcher.find()) {
+                    // Extrage numărul de rețele vizibile din text și îl convertim în int
+                    int totalNetworksVisible = Integer.parseInt(matcher.group(1));
+
+                    // Creează un obiect NetworkSummary gol
+                    NetworkSummary networkSummary = new NetworkSummary();
+
+                    // Setează numărul total de rețele vizibile
+                    networkSummary.setTotalNetworksVisible(totalNetworksVisible);
+
+                    // Presupunând că ai o listă de NetworkInfo deja populată numită networksList
+                    // Setează lista de rețele în NetworkSummary
+                    networkSummary.setNetworks(networkInfos);
+                }
+
+                // END RETELE VIZIBILE ---------------------------
 
                 // Procesăm linia dacă suntem în secțiunea dorită
                 if (trimmedLine.startsWith("SSID")) {
