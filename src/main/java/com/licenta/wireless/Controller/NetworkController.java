@@ -41,6 +41,20 @@ public class NetworkController {
         return "home";
     }
 
+    @GetMapping("/network/{ssid}")
+    public String showHomePage(Model model, @PathVariable("ssid") String ssid) {
+        List<NetworkInfo> networkInfos = htmlParserUtil.parseHtml();
+
+        NetworkInfo networkInfo = new NetworkInfo();
+        for (NetworkInfo info : networkInfos) {
+            if (info.getSsid().equals(ssid)) networkInfo = info;
+        }
+
+        model.addAttribute("networks", networkInfo);
+
+        return "network";
+    }
+
     // Servește pagina HTML networks.html
     @GetMapping("/networks")
     public String showNetworksPage(Model model) {

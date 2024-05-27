@@ -46,8 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the correct login/logout button state
     updateLoginStatus();
 
-    moreButton.addEventListener('click', () => {
+    // Redirecționează către pagina 'networks' doar atunci când butonul "More Info" este apăsat
+    moreButton.addEventListener('click', (event) => {
+        event.stopPropagation(); // Opresc propagarea evenimentului pentru a preveni acțiuni suplimentare pe elemente părinte
         window.location.href = 'networks';
     });
-
 });
