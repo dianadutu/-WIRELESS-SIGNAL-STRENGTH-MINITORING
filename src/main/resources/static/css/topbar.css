@@ -1,0 +1,36 @@
+/* topbar.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.topbar {
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.topbar button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#loginButton {
+    margin-left: auto;
+}
+
+#logoutButton{
+    margin-left: auto;
+
+}
+
+.topbar button:hover {
+    background-color: #555;
+}

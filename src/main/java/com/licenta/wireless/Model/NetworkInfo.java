@@ -11,7 +11,15 @@ public class NetworkInfo {
     private String encryption;
     private List<BSSIDInfo> bssids = new ArrayList<>();
 
+    private Long id; // sau orice alt tip corespunzător
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 
 
@@ -66,6 +74,24 @@ public class NetworkInfo {
     public void setBssids(List<BSSIDInfo> bssids) {
         this.bssids = bssids;
     }
+
+
+
+
+
+
+    public String getBand() {
+        for (BSSIDInfo bssid : bssids) {
+            if (bssid.getBand().contains("2.4")) {
+                return "2.4GHz";
+            } else if (bssid.getBand().contains("5")) {
+                return "5GHz";
+            }
+        }
+        return "Unknown";
+    }
+
+
 
 
 

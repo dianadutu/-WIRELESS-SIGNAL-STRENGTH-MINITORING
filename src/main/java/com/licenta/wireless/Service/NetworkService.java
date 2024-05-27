@@ -13,14 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-@Order(1) // Asigură-te că aceasta rulează prima
+@Order(1) // Ne asiguram ca aceasta rulează prima
 public class NetworkService  implements CommandLineRunner, Ordered {
 
    // private String filePath;
 
    // public NetworkService (String filePath) {
      //   this.filePath = filePath;
-    }//
+    //}
 
     private final String filePath;
 

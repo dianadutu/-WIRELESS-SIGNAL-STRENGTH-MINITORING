@@ -37,6 +37,9 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
         return 2; // ordinea de execuție
     }
 
+
+
+
     public List<NetworkInfo> parseHtml() {
         List<NetworkInfo> networkInfos = new ArrayList<>();
         try {
@@ -71,8 +74,14 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
     }
 
 
+    private int percentToDbm(int percent) {
+        // Ajustăm această funcție conform nevoilor tale specifice
+        return percent * (-50 + 100) / 100 - 100;
+    }
 
-        private List<NetworkInfo> processNetworkInfo(String networkInfo) {
+
+
+    private List<NetworkInfo> processNetworkInfo(String networkInfo) {
             String[] lines = networkInfo.split("\n");
             List<NetworkInfo> networkInfos = new ArrayList<>();
             NetworkInfo network = null; // Nu inițializăm încă
@@ -137,6 +146,10 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
 
                 // END RETELE VIZIBILE ---------------------------
 
+
+
+
+
                 // Procesăm linia dacă suntem în secțiunea dorită
                 if (trimmedLine.startsWith("SSID")) {
                     // Dacă am ajuns la un nou SSID, înseamnă că am terminat de procesat BSSID-urile anterioare
@@ -170,7 +183,17 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                     // Presupunem că restul informațiilor se referă la BSSID-ul curent până la întâlnirea unui nou BSSID sau SSID
                     if (trimmedLine.startsWith("Signal")) {
                         String signal = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
-                        currentBssidInfo.setSignal(signal);
+                        // Presupunând că signalStr este un procent sub formă de String, ex: "70%"
+                        signal = signal.replace("%", ""); // Eliminăm simbolul procent
+                        try {
+                            int signalPercent = Integer.parseInt(signal); // Convertim în int
+                            int signalDbm = percentToDbm(signalPercent); // Aplicăm conversia
+                            // Aici setezi valoarea în dBm în loc de procent
+                            currentBssidInfo.setSignal(String.valueOf(signalDbm) + " dBm"); // Presupunem că setter-ul acceptă un String
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            // Gestionăm cazul în care conversia din String în int eșuează
+                        }
                     } else if (trimmedLine.startsWith("Radio type         :")) {
                         String radioType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setRadioType(radioType);

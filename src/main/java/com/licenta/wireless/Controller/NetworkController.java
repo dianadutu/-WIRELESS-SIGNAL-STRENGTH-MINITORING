@@ -5,13 +5,10 @@ import com.licenta.wireless.Model.NetworkSummary;
 import com.licenta.wireless.util.HtmlParserUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Controller
@@ -23,22 +20,38 @@ public class NetworkController {
         this.htmlParserUtil = htmlParserUtil;
     }
 
-    // Servește JSON-ul
-    @GetMapping("/networks")
+    //  JSON-ul
+    @GetMapping("/api/networks")
     @ResponseBody
     public List<NetworkInfo> getNetworkInfos() {
         return htmlParserUtil.parseHtml();
     }
 
-    // Servește pagina HTML
-    @GetMapping("/network-page")
+
+    // Servește pagina HTML home.html
+    @GetMapping("/home")
+    public String showHomePage(Model model) {
+        List<NetworkInfo> networkInfos = htmlParserUtil.parseHtml();
+        int totalNetworksVisible = networkInfos.size();
+        NetworkSummary networkSummary = new NetworkSummary(totalNetworksVisible, networkInfos);
+
+        model.addAttribute("networkSummary", networkSummary);
+        model.addAttribute("networks", networkInfos);
+
+        return "home";
+    }
+
+    // Servește pagina HTML networks.html
+    @GetMapping("/networks")
     public String showNetworksPage(Model model) {
         List<NetworkInfo> networkInfos = htmlParserUtil.parseHtml();
-        int totalNetworksVisible = networkInfos.size(); // Calculăm numărul total de rețele vizibile
+        int totalNetworksVisible = networkInfos.size();
         NetworkSummary networkSummary = new NetworkSummary(totalNetworksVisible, networkInfos);
-        model.addAttribute("networkSummary", networkSummary); // Adăugăm rezumatul rețelei la model
 
+        model.addAttribute("networkSummary", networkSummary);
         model.addAttribute("networks", networkInfos);
-        return "networks"; // Numele template-ului Thymeleaf
+
+        return "networks";
     }
 }
+
