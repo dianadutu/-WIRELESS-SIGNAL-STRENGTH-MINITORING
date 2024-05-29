@@ -27,7 +27,7 @@
     <table>
         <tr class="first-row-highlight">
             <th>SSID</th>
-            <td class="ssid-highlight" th:text="${network.ssid}"></td>
+            <td class="ssid-highlight" th:text="${network.ssid != null && !network.ssid.isEmpty() ? network.ssid : '[hidden]'}"></td> <!-- daca SSID nu exista-->
         </tr>
         <tr>
             <th>Network Type</th>

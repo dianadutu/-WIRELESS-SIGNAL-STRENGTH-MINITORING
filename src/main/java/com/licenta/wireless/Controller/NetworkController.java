@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,19 +42,23 @@ public class NetworkController {
         return "home";
     }
 
-    @GetMapping("/network/{ssid}")
-    public String showHomePage(Model model, @PathVariable("ssid") String ssid) {
+    @GetMapping("/network/{index}")
+    public String showNetworkPage(Model model, @PathVariable("index") int index) {
         List<NetworkInfo> networkInfos = htmlParserUtil.parseHtml();
 
-        NetworkInfo networkInfo = new NetworkInfo();
-        for (NetworkInfo info : networkInfos) {
-            if (info.getSsid().equals(ssid)) networkInfo = info;
+        if (index >= 0 && index < networkInfos.size()) {
+            NetworkInfo networkInfo = networkInfos.get(index);
+            List<NetworkInfo> singleNetworkInfo = new ArrayList<>();
+            singleNetworkInfo.add(networkInfo);
+            model.addAttribute("networks", singleNetworkInfo);
+            return "network";
+        } else {
+            // Dacă index-ul este invalid, redirecționați către o pagină de eroare sau tratați eroarea în alt mod
+            return "error";
         }
-
-        model.addAttribute("networks", networkInfo);
-
-        return "network";
     }
+
+
 
     // Servește pagina HTML networks.html
     @GetMapping("/networks")
