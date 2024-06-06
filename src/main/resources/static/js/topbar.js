@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const homeButton = document.getElementById('homeButton');
     const refreshButton = document.getElementById('refreshButton');
     const historyButton = document.getElementById('historyButton');
     const moreButton = document.getElementById('moreButton');
@@ -12,8 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // History button functionality
     historyButton.addEventListener('click', () => {
-        alert('History button clicked!');
-        // Implement your history functionality here
+        window.location.href = '/history'; // Redirecționează către pagina history
     });
 
     // Login/Logout functionality
@@ -50,5 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
     moreButton.addEventListener('click', (event) => {
         event.stopPropagation(); // Opresc propagarea evenimentului pentru a preveni acțiuni suplimentare pe elemente părinte
         window.location.href = 'networks';
+    });
+
+    document.getElementById('moreButton').addEventListener('click', function() {
+        window.location.href = '/networks';
+    });
+
+    document.getElementById('homeButton').addEventListener('click', function() {
+        window.location.href = '/home';
     });
 });

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>History of User Profiles</title>
+  <link rel="stylesheet" href="/css/topbar.css">
+  <link rel="stylesheet" href="/css/history.css">
+</head>
+<body>
+<div class="topbar">
+  <button id="homeButton">Home</button>
+  <button id="refreshButton">Refresh</button>
+  <button id="historyButton">History</button>
+  <button id="moreButton">More Info</button>
+  <button id="loginButton">Login</button>
+  <button id="logoutButton" style="display: none;">Logout</button>
+</div>
+<h1>History of User Profiles</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Profile Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="profile : ${userProfiles}" class="clickable-row">
+    <td>
+      <span th:text="${profile.profileName}">Profile Name</span>
+      <div class="details" style="display: none;">
+        <p>Version: <span th:text="${profile.version}">Version</span></p>
+        <p>Type: <span th:text="${profile.type}">Type</span></p>
+        <p>Control Options: <span th:text="${profile.controlOptions}">Control Options</span></p>
+        <p>Number of SSIDs: <span th:text="${profile.numberOfSSIDs}">Number of SSIDs</span></p>
+        <p>SSID Name: <span th:text="${profile.ssidName}">SSID Name</span></p>
+        <p>Network Type: <span th:text="${profile.networkType}">Network Type</span></p>
+        <p>Radio Type: <span th:text="${profile.radioType}">Radio Type</span></p>
+        <p>Vendor Extension: <span th:text="${profile.vendorExtension}">Vendor Extension</span></p>
+        <p>Authentication: <span th:text="${profile.authentication}">Authentication</span></p>
+        <p>Cipher: <span th:text="${profile.cipher}">Cipher</span></p>
+        <p>Security Key Present: <span th:text="${profile.securityKeyPresent ? 'Yes' : 'No'}">Security Key Present</span></p>
+        <p>Cost: <span th:text="${profile.cost}">Cost</span></p>
+        <p>Congested: <span th:text="${profile.congested ? 'Yes' : 'No'}">Congested</span></p>
+        <p>Approaching Data Limit: <span th:text="${profile.approachingDataLimit ? 'Yes' : 'No'}">Approaching Data Limit</span></p>
+        <p>Over Data Limit: <span th:text="${profile.overDataLimit ? 'Yes' : 'No'}">Over Data Limit</span></p>
+        <p>Roaming: <span th:text="${profile.roaming ? 'Yes' : 'No'}">Roaming</span></p>
+        <p>Cost Source: <span th:text="${profile.costSource}">Cost Source</span></p>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<script src="/js/topbar.js"></script>
+<script src="/js/history.js"></script>
+</body>
+
+
+</html>
+
