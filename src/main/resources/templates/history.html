@@ -27,28 +27,52 @@
     <td>
       <span th:text="${profile.profileName}">Profile Name</span>
       <div class="details" style="display: none;">
-        <p>Version: <span th:text="${profile.version}">Version</span></p>
-        <p>Type: <span th:text="${profile.type}">Type</span></p>
-        <p>Control Options: <span th:text="${profile.controlOptions}">Control Options</span></p>
-        <p>Number of SSIDs: <span th:text="${profile.numberOfSSIDs}">Number of SSIDs</span></p>
-        <p>SSID Name: <span th:text="${profile.ssidName}">SSID Name</span></p>
-        <p>Network Type: <span th:text="${profile.networkType}">Network Type</span></p>
-        <p>Radio Type: <span th:text="${profile.radioType}">Radio Type</span></p>
-        <p>Vendor Extension: <span th:text="${profile.vendorExtension}">Vendor Extension</span></p>
-        <p>Authentication: <span th:text="${profile.authentication}">Authentication</span></p>
-        <p>Cipher: <span th:text="${profile.cipher}">Cipher</span></p>
-        <p>Security Key Present: <span th:text="${profile.securityKeyPresent ? 'Yes' : 'No'}">Security Key Present</span></p>
-        <p>Cost: <span th:text="${profile.cost}">Cost</span></p>
-        <p>Congested: <span th:text="${profile.congested ? 'Yes' : 'No'}">Congested</span></p>
-        <p>Approaching Data Limit: <span th:text="${profile.approachingDataLimit ? 'Yes' : 'No'}">Approaching Data Limit</span></p>
-        <p>Over Data Limit: <span th:text="${profile.overDataLimit ? 'Yes' : 'No'}">Over Data Limit</span></p>
-        <p>Roaming: <span th:text="${profile.roaming ? 'Yes' : 'No'}">Roaming</span></p>
-        <p>Cost Source: <span th:text="${profile.costSource}">Cost Source</span></p>
+        <div class="section">
+          <h3>General Information</h3>
+          <p>Version: <span th:text="${profile.version}">Version</span></p>
+          <p>Type: <span th:text="${profile.type}">Type</span></p>
+          <!--<p>Control Options <span th:text="${profile.controlOptions}">Control Options</span></p>-->
+          <p>Connection Mode: <span th:text="${profile.connectionMode}">Connection Mode</span></p>
+          <p>Network Broadcast: <span th:text="${profile.networkBroadcast}">Network Broadcast</span></p>
+          <p>AutoSwitch: <span th:text="${profile.autoSwitch}">AutoSwitch</span></p>
+          <p>MAC Randomization: <span th:text="${profile.MACRandomization}">MAC Randomization</span></p>
+        </div>
+        <div class="section">
+          <h3>Connectivity Settings</h3>
+          <p>Number of SSIDs: <span th:text="${profile.numberOfSSIDs}">Number of SSIDs</span></p>
+          <p>SSID Name: <span th:text="${profile.ssidName}">SSID Name</span></p>
+          <p>Network Type: <span th:text="${profile.networkType}">Network Type</span></p>
+          <p>Radio Type: <span th:text="${profile.radioType}">Radio Type</span></p>
+          <p>Vendor Extension: <span th:text="${profile.vendorExtension}">Vendor Extension</span></p>
+        </div>
+        <div class="section">
+          <h3>Security Settings</h3>
+          <p>Authentication: <span th:text="${profile.authentication}">Authentication</span></p>
+          <p>Cipher: <span th:text="${profile.cipher}">Cipher</span></p>
+          <p>Security Key Present: <span th:text="${profile.securityKeyPresent ? 'Yes' : 'No'}">Security Key Present</span></p>
+          <!-- Adăugarea detaliilor "802.1X" -->
+          <p th:if="${profile.eapType}">802.1X:</p>
+          <ul th:if="${profile.eapType}">
+            <li>EAP type: <span th:text="${profile.eapType}">EAP Type</span></li>
+            <li>802.1X auth credential: <span th:text="${profile.authCredential}">Auth Credential</span></li>
+            <li>Credentials configured: <span th:text="${profile.credentialsConfigured}">Credentials Configured</span></li>
+            <li>Cache user information: <span th:text="${profile.cacheUserInfo}">Cache User Information</span></li>
+          </ul>
+        </div>
+        <div class="section">
+          <h3>Cost Settings</h3>
+          <p>Congested: <span th:text="${profile.congested ? 'Yes' : 'No'}">Congested</span></p>
+          <p>Approaching Data Limit: <span th:text="${profile.approachingDataLimit ? 'Yes' : 'No'}">Approaching Data Limit</span></p>
+          <p>Over Data Limit: <span th:text="${profile.overDataLimit ? 'Yes' : 'No'}">Over Data Limit</span></p>
+          <p>Roaming: <span th:text="${profile.roaming ? 'Yes' : 'No'}">Roaming</span></p>
+          <!--<p>Cost Source: <span th:text="${profile.costSource}">Cost Source</span></p>-->
+        </div>
       </div>
     </td>
   </tr>
   </tbody>
 </table>
+
 
 <script src="/js/topbar.js"></script>
 <script src="/js/history.js"></script>

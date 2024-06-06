@@ -28,6 +28,53 @@ public class HistoryModel {
     private String autoSwitch;
     private String MACRandomization;
 
+    private String eapType;
+    private String authCredential;
+    private String credentialsConfigured;
+    private String cacheUserInfo;
+
+    public String getEapType() {
+        return eapType;
+    }
+
+    public void setEapType(String eapType) {
+        this.eapType = eapType;
+    }
+
+    public String getAuthCredential() {
+        return authCredential;
+    }
+
+    public void setAuthCredential(String authCredential) {
+        this.authCredential = authCredential;
+    }
+
+    public String getCredentialsConfigured() {
+        return credentialsConfigured;
+    }
+
+    public void setCredentialsConfigured(String credentialsConfigured) {
+        this.credentialsConfigured = credentialsConfigured;
+    }
+
+    public String getCacheUserInfo() {
+        return cacheUserInfo;
+    }
+
+    public void setCacheUserInfo(String cacheUserInfo) {
+        this.cacheUserInfo = cacheUserInfo;
+    }
+
+    public HistoryModel(String profileName, String eapType, String authCredential, String credentialsConfigured, String cacheUserInfo) {
+        this.profileName = profileName;
+        this.eapType = eapType;
+        this.authCredential = authCredential;
+        this.credentialsConfigured = credentialsConfigured;
+        this.cacheUserInfo = cacheUserInfo;
+    }
+
+
+
     // Constructori
     public HistoryModel() {
     }

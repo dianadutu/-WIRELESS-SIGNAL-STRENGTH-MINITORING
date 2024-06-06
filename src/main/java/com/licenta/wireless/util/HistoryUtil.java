@@ -1,8 +1,7 @@
-/*HistoryUtil cu detalii pt primul*/
-
 package com.licenta.wireless.util;
 
 import com.licenta.wireless.Model.HistoryModel;
+import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -63,7 +62,6 @@ public class HistoryUtil implements CommandLineRunner, Ordered {
         return userProfiles;
     }
 
-
     private List<HistoryModel> extractUserProfiles(String content) {
         List<HistoryModel> userProfiles = new ArrayList<>();
         boolean inProfilesSection = false;
@@ -89,28 +87,75 @@ public class HistoryUtil implements CommandLineRunner, Ordered {
         return userProfiles;
     }
 
-
     private void extractHistoryDetails(HistoryModel profile, String content, String profileName) {
         String[] lines = content.split("\\r?\\n");
         boolean isProfileSection = false;
+        boolean isControlOptionsSection = false;
+        boolean is8021xSection = false; // Adăugăm o nouă variabilă pentru secțiunea "802.1X"
 
         for (String line : lines) {
             String trimmedLine = line.trim();
 
-            if (trimmedLine.startsWith("Profile " + profileName)) {
+            // Decodarea entităților HTML în linia curentă
+            String decodedLine = StringEscapeUtils.unescapeHtml4(trimmedLine);
+
+            if (decodedLine.startsWith("Profile " + profileName)) {
                 isProfileSection = true;
                 continue;
             }
 
-            if (isProfileSection && trimmedLine.startsWith("Cost settings")) {
+            if (isProfileSection && decodedLine.startsWith("Cost settings")) {
                 break;
             }
 
-            if (isProfileSection) {
-                String[] parts = line.split(":", 2);
+            if (isProfileSection && decodedLine.startsWith("Control options")) {
+                isControlOptionsSection = true;
+                continue;
+            }
+
+            if (isProfileSection && decodedLine.isEmpty()) {
+                isControlOptionsSection = false;
+            }
+
+            if (isProfileSection && decodedLine.startsWith("802.1X")) {
+                // Dacă se găsește detaliul "802.1X", începe să proceseze următoarele linii
+                is8021xSection = true; // Setăm variabila pentru secțiunea "802.1X" la true
+                continue;
+            }
+
+            if (is8021xSection) {
+                String[] parts = decodedLine.split(":", 2);
                 if (parts.length == 2) {
                     String key = parts[0].trim();
-                    String value = parts[1].trim();
+                    String value = decodeAndCleanText(parts[1].trim());
+
+                    // Verificăm dacă detaliile pentru "802.1X" sunt disponibile și le adăugăm la profil doar dacă sunt
+                    if (!value.isEmpty()) {
+                        switch (key) {
+                            case "EAP type":
+                                profile.setEapType(value);
+                                break;
+                            case "802.1X auth credential":
+                                profile.setAuthCredential(value);
+                                break;
+                            case "Credentials configured":
+                                profile.setCredentialsConfigured(value);
+                                break;
+                            case "Cache user information":
+                                profile.setCacheUserInfo(value);
+                                break;
+                        }
+                    }
+                }
+            }
+
+
+
+            if (isProfileSection) {
+                String[] parts = decodedLine.split(":", 2);
+                if (parts.length == 2) {
+                    String key = parts[0].trim();
+                    String value = decodeAndCleanText(parts[1].trim());
 
                     switch (key) {
                         case "Version":
@@ -164,10 +209,27 @@ public class HistoryUtil implements CommandLineRunner, Ordered {
                         case "Cost Source":
                             profile.setCostSource(value);
                             break;
+                        case "Connection mode":
+                            profile.setConnectionMode(value);
+                            break;
+                        case "Network broadcast":
+                            profile.setNetworkBroadcast(value);
+                            break;
+                        case "AutoSwitch":
+                            profile.setAutoSwitch(value);
+                            break;
+                        case "MAC Randomization":
+                            profile.setMACRandomization(value);
+                            break;
                     }
                 }
             }
         }
     }
 
+    private String decodeAndCleanText(String text) {
+        // Decodăm entitățile HTML și eliminăm caracterele nerecunoscute
+        String decodedText = StringEscapeUtils.unescapeHtml4(text);
+        return decodedText.replaceAll("[^\\p{L}\\p{N}\\p{P}\\p{Z}]", "");
+    }
 }
