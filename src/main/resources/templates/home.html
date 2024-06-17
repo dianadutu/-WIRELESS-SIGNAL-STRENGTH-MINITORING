@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Network Information Table</title>
+    <link rel="stylesheet" href="/css/topbar.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+
+<div class="topbar">
+    <button id="homeButton">Home</button>
+    <button id="refreshButton">Refresh</button>
+    <button id="historyButton">History</button>
+    <button id="moreButton">More Info</button>
+    <button id="loginButton">Login</button>
+    <button id="logoutButton" style="display: none;">Logout</button>
+</div>
+<h2>Network Information Table</h2>
+
+<table class="table-networks">
+    <thead>
+    <tr>
+        <th class="tooltip">SSID
+            <span class="tooltiptext">SSID (Service Set Identifier) este numele rețelei Wi-Fi.</span>
+        </th>
+        <th class="tooltip">Signal
+            <span class="tooltiptext">Un semnal mai puternic oferă de obicei o conexiune mai stabilă și mai rapidă.</span>
+            <img src="/images/sort.png" alt="Sort" onclick="sortColumn('signal')" style="width: 20px; height: 20px;">
+        </th>
+        <th class="tooltip">Connected Stations
+            <img src="/images/sort.png" alt="Sort" onclick="sortColumn('connectedStations')" style="width: 20px; height: 20px;">
+        </th>
+        <th class="tooltip">Channel(s)
+            <span class="tooltiptext">Alegerea unui canal mai puțin aglomerat poate îmbunătăți performanța rețelei.</span>
+            <img src="/images/sort.png" alt="Sort" onclick="sortColumn('channel')" style="width: 20px; height: 20px;">
+        </th>
+        <th class="tooltip">Basic Rates
+            <span class="tooltiptext">Ratele de bază reprezintă vitezele minime suportate de rețea pentru transferul datelor.</span>
+            <img src="/images/sort.png" alt="Sort" onclick="sortColumn('rates')" style="width: 20px; height: 20px;">
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="network : ${networks}" class="clickable-row" onclick="networkRowClick(this)">
+        <td th:text="${network.ssid != null && !network.ssid.isEmpty() ? network.ssid : 'hidden'}"></td>
+        <td th:text="${network.bssids[0].signal}"
+            th:classappend="${@networkController.getSignalStrengthCssClass(network.bssids[0].signal)}"></td>
+        <td th:text="${network.bssids[0].connectedStations != null ? network.bssids[0].connectedStations : '-'}"></td>
+        <td th:text="${#strings.listJoin(network.bssids.![channel], ', ')}"></td>
+        <td th:text="${network.bssids[0].basicrates}"></td>
+    </tr>
+    </tbody>
+</table>
+<div id="faq-section">
+    <div class="faq-container">
+        <h4 class="question" onclick="toggleAnswer('answer1')">Ce sunt rețelele wireless?</h4>
+        <div class="answer" id="answer1">
+            Rețelele wireless sunt sisteme de comunicații care permit dispozitivelor să se conecteze fără a folosi cabluri fizice, utilizând unde radio pentru transmiterea datelor. Aceste rețele, cum ar fi Wi-Fi-ul și Bluetooth-ul, oferă mobilitate și acces la internet în diverse locuri, facilitând comunicarea și utilizarea dispozitivelor într-un mod convenabil și eficient.
+        </div>
+    </div>
+
+    <div class="faq-container">
+        <h4 class="question" onclick="toggleAnswer('answer2')">De ce este importantă securitatea rețelelor wireless?</h4>
+        <div class="answer" id="answer2">
+            Securitatea rețelelor wireless este crucială pentru protejarea datelor și a integrității rețelei împotriva accesului neautorizat. Fiindcă semnalele radio pot fi interceptate relativ ușor, o securitate adecvată prin utilizarea de parole puternice și criptare este esențială pentru a preveni accesul neautorizat la informații personale și confidentiale transmise prin rețelele wireless.
+        </div>
+    </div>
+
+    <div class="faq-container">
+        <h4 class="question" onclick="toggleAnswer('answer3')">Link-uri utile</h4>
+        <div class="answer" id="answer3">
+            <ul>
+                <li><a href="https://example.com/guide">Ghid pentru configurarea rețelelor wireless</a></li>
+                <li><a href="https://example.com/security">Securitatea rețelelor wireless</a></li>
+                <li><a href="https://example.com/troubleshoot">Depanare probleme rețele wireless</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- HTML pentru secțiunea cu link-uri utile -->
+
+
+
+
+<script src="/js/home.js"></script>
+<script src="/js/topbar.js"></script>
+</body>
+</html>

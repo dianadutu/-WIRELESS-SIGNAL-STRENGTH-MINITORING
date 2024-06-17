@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Network Information</title>
+  <link rel="stylesheet" href="/css/networks.css">
+  <link rel="stylesheet" href="/css/topbar.css">
+
+</head>
+<body>
+<div class="topbar">
+  <button id="homeButton">Home</button>
+  <button id="refreshButton">Refresh</button>
+  <button id="historyButton">History</button>
+  <button id="moreButton">More Info</button>
+  <button id="loginButton">Login</button>
+  <button id="logoutButton" style="display: none;">Logout</button>
+</div>
+
+<h2>Network Information</h2>
+
+<div th:each="network : ${networks}" class="network-container" th:if="${network.ssid == ssid || network.id == ssid}">
+  <table>
+    <tr class="first-row-highlight">
+      <th>SSID</th>
+      <td class="ssid-highlight" th:text="${network.ssid != null && !network.ssid.isEmpty() ? network.ssid : 'hidden'}"></td>
+    </tr>
+    <tr>
+      <th>Network Type</th>
+      <td th:text="${network.networkType}"></td>
+    </tr>
+    <tr>
+      <th>Authentication</th>
+      <td th:text="${network.authentication}"></td>
+    </tr>
+    <tr>
+      <th>Encryption</th>
+      <td th:text="${network.encryption}"></td>
+    </tr>
+  </table>
+
+  <h3 class="bssid-title">BSSID Information</h3>
+  <table class="table-bssid">
+    <thead>
+    <tr>
+      <th>No.</th>
+      <th>BSSID</th>
+      <th>Signal</th>
+      <th>Radio Type</th>
+      <th>Band</th>
+      <th>Channel</th>
+      <th>Connected Stations</th>
+      <th>Channel Utilization</th>
+      <th>Medium Capacity</th>
+      <th>Basic Rates</th>
+      <th>Other Rates</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bssid, iterStat : ${network.bssids}">
+      <td th:text="${iterStat.count}"></td> <!-- Adaugă această celulă pentru numărul liniei -->
+      <td th:text="${bssid.bssid}"></td>
+      <td th:text="${bssid.signal}"></td>
+      <td th:text="${bssid.radioType}"></td>
+      <td th:text="${bssid.band}"></td>
+      <td th:text="${bssid.channel}"></td>
+      <td th:text="${bssid.connectedStations}"></td>
+      <td th:text="${bssid.channelUtilization}"></td>
+      <td th:text="${bssid.mediumCapacity}"></td>
+      <td th:text="${bssid.basicrates}"></td>
+      <td th:text="${bssid.otherrates}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <br/>
+</div>
+
+<div id="charts-container">
+  <canvas id="chart2GHz"></canvas>
+  <canvas id="chart5GHz"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- biblioteca grafice js -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+
+<script src="/js/singleband.js"></script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var networksData = /*[[${networks}]]*/ [];
+  /*]]>*/
+</script>
+
+
+<script src="/js/topbar.js"></script>
+
+</body>
+</html>

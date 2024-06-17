@@ -1,0 +1,145 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Stil pentru titlul principal al paginii */
+h2 {
+    color: #2E86C1; /* Schimbă culoarea într-un albastru placut */
+    text-align: center;
+    margin-top: 20px; /* Asigură un spațiu suplimentar deasupra titlului */
+    margin-bottom: 40px; /* Asigură un spațiu suplimentar sub titlu */
+    font-size: 28px; /* Mărește fontul pentru a face titlul mai vizibil */
+    font-weight: normal; /* Opțional: Redu intensitatea boldului pentru un aspect mai subtil */
+}
+
+/* Stil pentru subtitlu - numărul total de rețele vizibile */
+h3 {
+    margin-left: 5%; /* Aliniază cu partea de început a tabelelor */
+    color: #117A65; /* O nuanță de verde pentru diferențiere */
+    text-align: center;
+    margin-top: 10px; /* Spațiu suplimentar deasupra subtitlului */
+    margin-bottom: 30px; /* Spațiu sub subtitlu pentru a delimita de conținut */
+    font-size: 22px; /* Ușor mai mare pentru importanța sa */
+    font-weight: normal; /* Menține uniformitatea stilului cu h2 */
+    border-bottom: 1px solid #D5D8DC; /* Linie subțire pentru a sublinia subtitlul */
+    display: inline-block; /* Asigură că linia de dedesubt nu se extinde pe toată lățimea */
+    padding-bottom: 5px; /* Spațiu mic sub text pentru a nu atinge linia */
+}
+
+
+
+
+/* Adăugat în networks.css */
+.ssid-highlight {
+    font-weight: bold; /* face textul să fie bold */
+    font-size: 20px; /* mărește dimensiunea fontului */
+    color: #333; /* schimbă culoarea textului, dacă dorești */
+}
+
+.first-row-highlight {
+    background-color: #D6EAF8; /* O nuanță de albastru deschis, de exemplu */
+}
+
+/* Spațiere și margini pentru întregul container de rețea */
+.network-container {
+    margin-bottom: 40px; /* Adaugă spațiu suplimentar la partea de jos a fiecărei rețele */
+    border: 1px solid #ccc; /* O bordură subtilă în jurul fiecărei rețele */
+    border-radius: 10px; /* Colțuri rotunjite pentru bordură */
+    padding: 20px; /* Spațiu în interiorul bordurii */
+    background-color: #f9f9f9; /* O culoare de fundal ușoară */
+}
+
+/* Stiluri pentru a evidenția titlurile secțiunilor de tabel */
+/* Modifică acest stil pentru a face titlul BSSID mai puțin proeminent */
+.bssid-title {
+    text-align: start;
+    margin-left: 5%; /* Aliniază cu partea de început a tabelelor */
+
+    color: #333; /* Schimbă culoarea textului într-un gri închis */
+    margin-top: 30px; /* Spațiu suplimentar deasupra pentru separare */
+    margin-bottom: 10px; /* Spațiu sub titlu pentru a delimita de tabel */
+    font-size: 18px; /* Mărim puțin fontul pentru a-l face să iasă în evidență */
+    border-bottom: 2px solid #4CAF50; /* Adaugă o linie subțire sub titlu pentru accent */
+    display: inline-block; /* Se aplică bordura doar pe lungimea textului */
+    padding-bottom: 5px; /* Spațiu mic sub text pentru a nu atinge linia */
+}
+
+
+.table-header {
+    background-color: #4CAF50; /* Consistent cu restul headerelor pentru coerență */
+    color: white; /* Text alb pentru citire ușoară */
+}
+
+/* Schimbă stilul liniilor de separație între diferitele BSSID-uri */
+.table-bssid tr:nth-child(even) {
+    background-color: #E8F5E9; /* O culoare mai deschisă pentru rândurile pare */
+}
+
+.table-bssid tr:nth-child(odd) {
+    background-color: #F1F8E9; /* O culoare diferită pentru rândurile impare */
+}
+
+#charts-container {
+
+
+    display: flex;
+    justify-content: center; /* sau space-around pentru spațiu în jurul elementelor */
+    align-items: center;
+    /* Elimină sau comentează următoarea linie dacă nu vrei să permiti înfășurarea pe ecrane mici */
+    /* flex-wrap: wrap; */
+}
+
+#chart2GHz, #chart5GHz {
+    margin: 10px;
+    /* Fără flex: 1; pentru a preveni ca graficele să împartă egal spațiul, dacă dorești dimensiuni specifice */
+}
+
+/* Specifică lățimi maxime diferite pentru a controla lățimea graficelor */
+#chart2GHz {
+    max-width: 450px; /* Ajustează conform necesităților */
+    max-height: 400px;
+}
+
+#chart5GHz {
+    max-width: 700px; /* Ajustează conform necesităților */
+    max-height: 400px;
+}
+
+@media (max-width: 600px) {
+    #charts-container {
+        flex-direction: column; /* Opțional, dacă dorești să se stiveze vertical pe ecrane mici */
+    }
+
+    #chart2GHz, #chart5GHz {
+        max-width: 100%; /* Permite graficelor să se extindă pe toată lățimea containerului pe ecrane mici */
+    }
+}
+
+
+
+
