@@ -30,7 +30,37 @@
 			<version>1.5.3</version> <!-- Asigură-te că folosești o versiune actuală -->
 		</dependency>
 
+		<!-- pt caracterele speciale cum e apostrful -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.9</version>
+		</dependency>
 
+
+
+		<!-- MySQL Connector -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- HikariCP -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.0.1</version> <!-- Versiunea poate varia, asigurați-vă că aveți cea mai recentă compatibilă -->
+		</dependency>
+
+
+		<!-- Spring Boot Starter Mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

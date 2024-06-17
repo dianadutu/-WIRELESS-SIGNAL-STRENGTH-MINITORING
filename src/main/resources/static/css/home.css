@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+.table-networks {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table-networks th, .table-networks td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.table-networks th {
+    background-color: #4CAF50;
+    color: white;
+    position: relative; /* Necesar pentru tooltip */
+}
+.table-networks tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+/* Stilizarea tooltip-ului */
+.tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: calc(100% + 10px); /* Modificare pentru a păstra distanța de săgeți */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-weight: 300; /* Text subțire */
+    font-size: smaller;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Săgeată jos */
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.sortable-column {
+    position: relative;
+}
+.sortable-column img {
+    position: absolute;
+    right: 5px; /* Ajustează spațiul între imagine și text */
+    cursor: pointer;
+}
+
+/* Signal color classes */
+.signal-weak {
+    color: red;
+}
+
+.signal-medium {
+    color: orange;
+}
+
+.signal-strong {
+    color: green;
+}
+
+
+
+.faq-container {
+    margin-bottom: 20px;
+}
+
+.question {
+    background-color: #b6d7a8;
+    padding: 15px; /* Măresc puțin padding-ul pentru un aspect mai plăcut */
+    border-radius: 30px; /*  marginile mai rotunjite */
+    cursor: pointer;
+    margin-bottom: 10px; /*a separa mai bine întrebările */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.answer {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 15px; /* Măresc padding-ul pentru un aspect mai plăcut */
+    border-radius: 15px; /* Ajustez border-radius pentru a face marginile mai rotunjite */
+    display: none;
+}
+
+#faq-section {
+    margin-top: 80px; /* Poți ajusta valoarea în funcție de cât spațiu vrei să fie */
+}

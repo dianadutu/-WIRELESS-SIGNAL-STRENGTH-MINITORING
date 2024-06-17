@@ -3,15 +3,23 @@ package com.licenta.wireless.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NetworkInfo {
+
     private String ssid;
     private String networkType;
     private String authentication;
     private String encryption;
     private List<BSSIDInfo> bssids = new ArrayList<>();
-
     private Long id; // sau orice alt tip corespunzător
+
+    public NetworkInfo() {}
+
+    public NetworkInfo(String ssid, String networkType, String authentication, String encryption) {
+        this.ssid = ssid;
+        this.networkType = networkType;
+        this.authentication = authentication;
+        this.encryption = encryption;
+    }
 
     public Long getId() {
         return id;
@@ -19,20 +27,6 @@ public class NetworkInfo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-
-
-
-
-    public NetworkInfo() {}
-    public NetworkInfo(String ssid, String networkType, String authentication, String encryption) {
-        this.ssid = ssid;
-        this.networkType = networkType;
-        this.authentication = authentication;
-        this.encryption = encryption;
-
     }
 
     public String getSsid() {
@@ -75,11 +69,6 @@ public class NetworkInfo {
         this.bssids = bssids;
     }
 
-
-
-
-
-
     public String getBand() {
         for (BSSIDInfo bssid : bssids) {
             if (bssid.getBand().contains("2.4")) {
@@ -91,13 +80,10 @@ public class NetworkInfo {
         return "Unknown";
     }
 
-
-
-
-
     // Constructor, getteri și setteri
 
     public static class BSSIDInfo {
+
         private String bssid;
         private String signal;
         private String radioType;
@@ -110,6 +96,7 @@ public class NetworkInfo {
         private String Otherrates;
 
         public BSSIDInfo() {}
+
         public BSSIDInfo(String bssid, String signal, String radioType, String band, String channel, String connectedStations, String channelUtilization, String mediumCapacity, String basicrates, String otherrates) {
             this.bssid = bssid;
             this.signal = signal;
@@ -202,7 +189,5 @@ public class NetworkInfo {
         public void setOtherrates(String otherrates) {
             Otherrates = otherrates;
         }
-
-
     }
 }

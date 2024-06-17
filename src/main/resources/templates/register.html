@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account</title>
+  <link rel="stylesheet" href="/css/register.css">
+
+</head>
+<body>
+<div class="create-account-container">
+  <h2>Create Account</h2>
+  <form id="create-account-form" action="/register" method="post">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="8">
+    </div>
+    <div class="form-group">
+      <label for="confirm-password">Confirm Password</label>
+      <input type="password" id="confirm-password" name="confirmPassword" required minlength="8">
+    </div>
+    <div class="form-group">
+      <button type="submit">Create Account</button>
+    </div>
+    <div class="loader" id="loader"></div>
+    <div class="error-message" id="error-message"></div>
+    <div class="success-message" id="success-message"></div>
+    <div class="extra-options">
+      <a href="login">Already have an account? Login</a>
+    </div>
+  </form>
+</div>
+
+<script src="/js/register.js"></script>
+</body>
+</html>

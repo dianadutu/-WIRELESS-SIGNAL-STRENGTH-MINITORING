@@ -1,4 +1,4 @@
-/*package com.licenta.wireless.Service;
+package com.licenta.wireless.Service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -35,6 +35,9 @@ public class NetworkService  implements CommandLineRunner, Ordered {
     }
 
     public void run(String... args) throws Exception {
+        runService();
+    }
+    public void runService() throws Exception {
         System.out.println("Începe procesarea...");
 
         // Detectează dinamic numele interfeței și SSID-ul rețelei curente
@@ -95,7 +98,7 @@ public class NetworkService  implements CommandLineRunner, Ordered {
 
         // Așteaptă puțin pentru dezactivare
         try {
-            Thread.sleep(2000); // Așteaptă 2 secunde
+            Thread.sleep(1000); // Așteaptă 1 secunde
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -106,7 +109,7 @@ public class NetworkService  implements CommandLineRunner, Ordered {
 
         // Așteaptă puțin pentru reactivare și inițializare
         try {
-            Thread.sleep(2000); // Așteaptă alte 2 secunde
+            Thread.sleep(1000); // Așteaptă alte 1 secunde
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -120,7 +123,7 @@ public class NetworkService  implements CommandLineRunner, Ordered {
         // Așteaptă un timp pentru a permite reconectarea la rețea
         try {
             System.out.println("Așteptarea reconectării la rețea...");
-            Thread.sleep(10000); // Așteaptă 10 secunde pentru reconectare
+            Thread.sleep(5000); // Așteaptă 5 secunde pentru reconectare
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -164,4 +167,3 @@ public class NetworkService  implements CommandLineRunner, Ordered {
         return output.toString();
     }
 }
-*/

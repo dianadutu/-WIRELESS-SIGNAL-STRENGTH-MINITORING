@@ -12,6 +12,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import org.apache.commons.text.StringEscapeUtils; //caract speciale
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -149,9 +151,10 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
 
 
 
+                // Decodarea entităților HTML în linia curentă
+                String decodedLine = StringEscapeUtils.unescapeHtml4(trimmedLine);
 
-                // Procesăm linia dacă suntem în secțiunea dorită
-                if (trimmedLine.startsWith("SSID")) {
+                if (decodedLine.startsWith("SSID")) {
                     // Dacă am ajuns la un nou SSID, înseamnă că am terminat de procesat BSSID-urile anterioare
                     if (network != null) { // Dacă nu este primul SSID procesat
                         // Dacă există o rețea în curs de procesare, salvăm și resetăm
@@ -160,29 +163,29 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                         bssidInfos = new ArrayList<>();
                     }
                     network = new NetworkInfo();
-                    String ssid = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    String ssid = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                     network.setSsid(ssid);
-                }    else  if (trimmedLine.startsWith("Network type            :")) {
-                    String networkType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                } else if (decodedLine.startsWith("Network type            :")) {
+                    String networkType = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                     network.setNetworkType(networkType);
-                } else if (trimmedLine.startsWith("Authentication")) {
-                    String authentication = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                } else if (decodedLine.startsWith("Authentication")) {
+                    String authentication = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                     network.setAuthentication(authentication);
-                } else if (trimmedLine.startsWith("Encryption")) {
-                    String encryption = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                } else if (decodedLine.startsWith("Encryption")) {
+                    String encryption = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                     network.setEncryption(encryption);
                 }
-                else if (trimmedLine.startsWith("BSSID")) {
+                else if (decodedLine.startsWith("BSSID")) {
                     // Începem un nou BSSIDInfo
                     currentBssidInfo = new NetworkInfo.BSSIDInfo();
-                    String bssid = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    String bssid = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                     currentBssidInfo.setBssid(bssid);
                     // Adăugăm BSSIDInfo curent la lista de BSSID-uri pentru acest SSID
                     bssidInfos.add(currentBssidInfo);
                 } else if (currentBssidInfo != null) {
                     // Presupunem că restul informațiilor se referă la BSSID-ul curent până la întâlnirea unui nou BSSID sau SSID
                     if (trimmedLine.startsWith("Signal")) {
-                        String signal = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                        String signal = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         // Presupunând că signalStr este un procent sub formă de String, ex: "70%"
                         signal = signal.replace("%", ""); // Eliminăm simbolul procent
                         try {
@@ -194,39 +197,38 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                             e.printStackTrace();
                             // Gestionăm cazul în care conversia din String în int eșuează
                         }
-                    } else if (trimmedLine.startsWith("Radio type         :")) {
-                        String radioType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    } else if (decodedLine.startsWith("Radio type         :")) {
+                        String radioType = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setRadioType(radioType);
-                    } else if (trimmedLine.startsWith("Band")) {
-                        String band = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    } else if (decodedLine.startsWith("Band")) {
+                        String band = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setBand(band);
-                    } else if (trimmedLine.startsWith("Channel            :")) {
-                        String channel = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    } else if (decodedLine.startsWith("Channel            :")) {
+                        String channel = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setChannel(channel);
-
-                    } else if (trimmedLine.startsWith("Bss Load:")) {
-                        isProcessingBSSID = true; // Presupunem că începem procesarea informațiilor specifice BSSID
+                    } else if (decodedLine.startsWith("Bss Load:")) {
+                        isProcessingBSSID = true;
                     } else if (isProcessingBSSID) {
-                        if (trimmedLine.startsWith("Connected Stations")) {
-                            String connectedStations = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                        if (decodedLine.startsWith("Connected Stations")) {
+                            String connectedStations = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                             currentBssidInfo.setConnectedStations(connectedStations);
-                        } else if (trimmedLine.startsWith("Channel Utilization:")) {
-                            String channelUtilization = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                        } else if (decodedLine.startsWith("Channel Utilization:")) {
+                            String channelUtilization = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                             currentBssidInfo.setChannelUtilization(channelUtilization);
-                        } else if (trimmedLine.startsWith("Medium Available Capacity")) {
-                            String mediumAvailableCapacity = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                        } else if (decodedLine.startsWith("Medium Available Capacity")) {
+                            String mediumAvailableCapacity = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                             currentBssidInfo.setMediumCapacity(mediumAvailableCapacity);
-                            isProcessingBSSID = false; // Presupunem că după această informație, am terminat de procesat detaliile specifice BSSID
+                            isProcessingBSSID = false;
                         }
-                    }
-
-                    else if (trimmedLine.startsWith("Basic rates")) {
-                        String basicRates = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    } else if (decodedLine.startsWith("Basic rates")) {
+                        String basicRates = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setBasicrates(basicRates);
-                    } else if (trimmedLine.startsWith("Other rates")) {
-                        String otherRates = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();
+                    } else if (decodedLine.startsWith("Other rates")) {
+                        String otherRates = decodedLine.substring(decodedLine.indexOf(":") + 1).trim();
                         currentBssidInfo.setOtherrates(otherRates);
                     }
+
+
 
                     // else if (trimmedLine.startsWith("Radio Type")) {
                     //     String radioType = trimmedLine.substring(trimmedLine.indexOf(":") + 1).trim();

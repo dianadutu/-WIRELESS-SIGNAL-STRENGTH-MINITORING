@@ -21,13 +21,12 @@ public class NetworkController {
         this.htmlParserUtil = htmlParserUtil;
     }
 
-    //  JSON-ul
+    // JSON-ul
     @GetMapping("/api/networks")
     @ResponseBody
     public List<NetworkInfo> getNetworkInfos() {
         return htmlParserUtil.parseHtml();
     }
-
 
     // Servește pagina HTML home.html
     @GetMapping("/home")
@@ -53,12 +52,10 @@ public class NetworkController {
             model.addAttribute("networks", singleNetworkInfo);
             return "network";
         } else {
-            // Dacă index-ul este invalid, redirecționați către o pagină de eroare sau tratați eroarea în alt mod
+            // Dacă index-ul este invalid
             return "error";
         }
     }
-
-
 
     // Servește pagina HTML networks.html
     @GetMapping("/networks")
@@ -72,5 +69,26 @@ public class NetworkController {
 
         return "networks";
     }
-}
 
+    // Funcția personalizată pentru extragerea valorii semnalului
+    public static int extractSignalStrength(String signal) {
+        try {
+            return Integer.parseInt(signal.split(" ")[0]);
+        } catch (NumberFormatException e) {
+            return Integer.MIN_VALUE; // sau orice valoare implicită
+        }
+    }
+    // Funcția pentru a determina clasa CSS pe baza valorii semnalului
+    public String getSignalStrengthCssClass(String signal) {
+        int signalStrength = extractSignalStrength(signal);
+        if (signalStrength >= -60 && signalStrength <= -30) {
+            return "signal-strong";
+        } else if (signalStrength >= -79 && signalStrength <= -59) {
+            return "signal-medium";
+        } else if (signalStrength >= -90 && signalStrength <= -80) {
+            return "signal-weak";
+        } else {
+            return "";
+        }
+    }
+}

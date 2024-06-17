@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutButton = document.getElementById('logoutButton');
 
     // Refresh button functionality
-    refreshButton.addEventListener('click', () => {
-        location.reload();
+    document.getElementById('refreshButton').addEventListener('click', function() {
+        window.location.href = '/refresh';
     });
 
     // History button functionality
@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '/history'; // Redirecționează către pagina history
     });
 
-    // Login/Logout functionality
-    let loggedIn = false;
+    // Verificăm starea de autentificare din local storage
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
     const updateLoginStatus = () => {
-        if (loggedIn) {
+        if (isLoggedIn) {
             loginButton.style.display = 'none';
             logoutButton.style.display = 'inline-block';
         } else {
@@ -30,26 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     loginButton.addEventListener('click', () => {
-        loggedIn = true;
+        localStorage.setItem('isLoggedIn', 'true');
         updateLoginStatus();
-        alert('Logged in!');
-        // Implement your login functionality here
+        window.location.href = '/login';
     });
 
     logoutButton.addEventListener('click', () => {
-        loggedIn = false;
+        localStorage.setItem('isLoggedIn', 'false');
         updateLoginStatus();
-        alert('Logged out!');
-        // Implement your logout functionality here
+        window.location.href = '/logout';
     });
 
-    // Initialize the correct login/logout button state
+    // afisare login/logout corect
     updateLoginStatus();
 
     // Redirecționează către pagina 'networks' doar atunci când butonul "More Info" este apăsat
     moreButton.addEventListener('click', (event) => {
         event.stopPropagation(); // Opresc propagarea evenimentului pentru a preveni acțiuni suplimentare pe elemente părinte
-        window.location.href = 'networks';
+        window.location.href = '/networks';
     });
 
     document.getElementById('moreButton').addEventListener('click', function() {
