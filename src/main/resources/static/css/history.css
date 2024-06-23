@@ -6,7 +6,7 @@ body {
     color: #333;
 }
 
-/* Styling for the topbar */
+
 .topbar {
     background-color: #343a40;
     padding: 10px;
@@ -32,14 +32,14 @@ body {
     outline: none;
 }
 
-/* Styling for the main heading */
+
 h1 {
     text-align: center;
     margin-top: 20px;
     color: #343a40;
 }
 
-/* Styling for the table */
+/* tabel */
 table {
     width: 80%;
     margin: 20px auto;

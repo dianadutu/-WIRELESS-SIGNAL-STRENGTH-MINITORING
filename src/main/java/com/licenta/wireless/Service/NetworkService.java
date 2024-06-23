@@ -98,7 +98,7 @@ public class NetworkService  implements CommandLineRunner, Ordered {
 
         // Așteaptă puțin pentru dezactivare
         try {
-            Thread.sleep(1000); // Așteaptă 1 secunde
+            Thread.sleep(1000); // Așteaptă 1 secunda
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -109,7 +109,7 @@ public class NetworkService  implements CommandLineRunner, Ordered {
 
         // Așteaptă puțin pentru reactivare și inițializare
         try {
-            Thread.sleep(1000); // Așteaptă alte 1 secunde
+            Thread.sleep(1000); // Așteaptă alte 1 secunda
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // pt afisare history page
     const rows = document.querySelectorAll('.clickable-row');
 
     rows.forEach(row => {
@@ -11,4 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    ////// end afisare
 });
+

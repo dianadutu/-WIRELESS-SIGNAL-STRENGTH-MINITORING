@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>History of User Profiles</title>
+    <link rel="stylesheet" href="/css/topbar.css">
+    <link rel="stylesheet" href="/css/history.css">
+</head>
+<body>
+<div class="topbar">
+    <button id="homeButton">Home</button>
+    <button id="refreshButton">Refresh</button>
+    <div class="dropdown">
+        <button id="historyButton" class="dropbtn">History</button>
+        <div class="dropdown-content">
+            <a href="#" id="deviceHistoryButton">Device History</a>
+            <a href="#" id="userHistoryButton">User History</a>
+        </div>
+    </div>
+    <button id="moreButton">More Info</button>
+    <button id="loginButton">Login</button>
+    <button id="logoutButton" style="display: none;">Logout</button>
+</div>
+<h1>User-Saved Network History</h1>
+<table id="profilesTable" border="1">
+    <thead>
+    <tr>
+        <th>Profile Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="profile : ${userHistory}" class="clickable-row">
+        <td>
+            <span id="profileName_${profile.id}" th:text="${profile.profileName}">Profile Name</span>
+            <div class="details" style="display: none;">
+                <div class="section">
+                    <h3>General Information</h3>
+                    <p>Version: <span id="version_${profile.id}" th:text="${profile.version}">Version</span></p>
+                    <p>Type: <span id="type_${profile.id}" th:text="${profile.type}">Type</span></p>
+                    <!--<p>Control Options <span id="controlOptions_${profile.id}" th:text="${profile.controlOptions}">Control Options</span></p>-->
+                    <p>Connection Mode: <span id="connectionMode_${profile.id}" th:text="${profile.connectionMode}">Connection Mode</span></p>
+                    <p>Network Broadcast: <span id="networkBroadcast_${profile.id}" th:text="${profile.networkBroadcast}">Network Broadcast</span></p>
+                    <p>AutoSwitch: <span id="autoSwitch_${profile.id}" th:text="${profile.autoSwitch}">AutoSwitch</span></p>
+                    <p>MAC Randomization: <span id="macRandomization_${profile.id}" th:text="${profile.macRandomization}">MAC Randomization</span></p>
+                </div>
+                <div class="section">
+                    <h3>Connectivity Settings</h3>
+                    <p>Number of SSIDs: <span id="numberOfSSIDs_${profile.id}" th:text="${profile.numberOfSsids}">Number of SSIDs</span></p>
+                    <p>SSID Name: <span id="ssidName_${profile.id}" th:text="${profile.ssidName}">SSID Name</span></p>
+                    <p>Network Type: <span id="networkType_${profile.id}" th:text="${profile.networkType}">Network Type</span></p>
+                    <p>Radio Type: <span id="radioType_${profile.id}" th:text="${profile.radioType}">Radio Type</span></p>
+                    <p>Vendor Extension: <span id="vendorExtension_${profile.id}" th:text="${profile.vendorExtension}">Vendor Extension</span></p>
+                </div>
+                <div class="section">
+                    <h3>Security Settings</h3>
+                    <p>Authentication: <span id="authentication_${profile.id}" th:text="${profile.authentication}">Authentication</span></p>
+                    <p>Cipher: <span id="cipher_${profile.id}" th:text="${profile.cipher}">Cipher</span></p>
+                    <p>Security Key Present: <span id="securityKeyPresent_${profile.id}" th:text="${profile.securityKeyPresent ? 'Yes' : 'No'}">Security Key Present</span></p>
+                    <p th:if="${profile.eapType}">802.1X:</p>
+                    <ul th:if="${profile.eapType}">
+                        <li>EAP type: <span id="eapType_${profile.id}" th:text="${profile.eapType}">EAP Type</span></li>
+                        <li>802.1X auth credential: <span id="authCredential_${profile.id}" th:text="${profile.authCredential}">Auth Credential</span></li>
+                        <li>Credentials configured: <span id="credentialsConfigured_${profile.id}" th:text="${profile.credentialsConfigured}">Credentials Configured</span></li>
+                        <li>Cache user information: <span id="cacheUserInfo_${profile.id}" th:text="${profile.cacheUserInfo}">Cache User Information</span></li>
+                    </ul>
+                </div>
+                <div class="section">
+                    <h3>Cost Settings</h3>
+                    <p>Congested: <span id="congested_${profile.id}" th:text="${profile.congested ? 'Yes' : 'No'}">Congested</span></p>
+                    <p>Approaching Data Limit: <span id="approachingDataLimit_${profile.id}" th:text="${profile.approachingDataLimit ? 'Yes' : 'No'}">Approaching Data Limit</span></p>
+                    <p>Over Data Limit: <span id="overDataLimit_${profile.id}" th:text="${profile.overDataLimit ? 'Yes' : 'No'}">Over Data Limit</span></p>
+                    <p>Roaming: <span id="roaming_${profile.id}" th:text="${profile.roaming ? 'Yes' : 'No'}">Roaming</span></p>
+                    <!--<p>Cost Source: <span id="costSource_${profile.id}" th:text="${profile.costSource}">Cost Source</span></p>-->
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- Modal Structure -->
+<div id="saveProfileModal" class="modal">
+    <div class="modal-content">
+        <h2>Save Profiles</h2>
+        <p>Do you want to save these profiles to User History?</p>
+        <button id="confirmSaveProfiles">Save Profiles</button>
+        <button id="cancelSaveProfiles">Show Saved Profiles</button>
+        <button id="deleteProfiles">Delete Saved Profiles</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const deleteProfilesButton = document.getElementById('deleteProfiles');
+
+        deleteProfilesButton.addEventListener('click', async () => {
+            const confirmation = confirm('Are you sure you want to delete all saved profiles?');
+            if (confirmation) {
+                const response = await fetch('/api/history/delete', {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Profiles deleted successfully.');
+                    window.location.reload(); // Reload the page after deletion
+                } else {
+                    alert('Failed to delete profiles.');
+                }
+            }
+        });
+    });
+</script>
+
+
+
+
+<script src="/js/topbar.js"></script>
+<script src="/js/history.js"></script>
+</body>
+
+
+</html>
+

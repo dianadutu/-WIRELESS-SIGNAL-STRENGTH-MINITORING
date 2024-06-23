@@ -11,7 +11,13 @@
 <div class="topbar">
     <button id="homeButton">Home</button>
     <button id="refreshButton">Refresh</button>
-    <button id="historyButton">History</button>
+    <div class="dropdown">
+        <button id="historyButton" class="dropbtn">History</button>
+        <div class="dropdown-content">
+            <a href="#" id="deviceHistoryButton">Device History</a>
+            <a href="#" id="userHistoryButton">User History</a>
+        </div>
+    </div>
     <button id="moreButton">More Info</button>
     <button id="loginButton">Login</button>
     <button id="logoutButton" style="display: none;">Logout</button>
@@ -79,7 +85,15 @@
     </table>
     <br/>
 </div>
-
+<!-- Modal Structure -->
+<div id="saveProfileModal" class="modal">
+    <div class="modal-content">
+        <h2>Save Profiles</h2>
+        <p>Do you want to save the profiles before viewing User History?</p>
+        <button id="confirmSaveProfiles">Save Profiles</button>
+        <button id="cancelSaveProfiles">Cancel</button>
+    </div>
+</div>
 <div id="charts-container" >
     <canvas id="chart2GHz" ></canvas>
     <canvas id="chart5GHz" ></canvas>
@@ -97,7 +111,7 @@
     /*<![CDATA[*/
     var networksData = /*[[${networks}]]*/ [];
     //console.log(networksData);
-   // console.log(/*[[${networks}]]*/);
+    // console.log(/*[[${networks}]]*/);
     /*]]>*/
 
 

@@ -17,17 +17,17 @@ function sortColumn(column) {
         let aValue, bValue;
 
         if (column === 'channel' || column === 'rates') {
-            // Split the channels/rates into arrays of numbers
+            // impartim channels/rates in arrays de numere
             aValue = aText.split(',').map(num => parseFloat(num.trim()));
             bValue = bText.split(',').map(num => parseFloat(num.trim()));
 
-            // First compare by the number of channels/rates
+            // mai intai compar dupa numarul de channels/rates
             if (aValue.length < bValue.length) {
                 return -1 * order;
             } else if (aValue.length > bValue.length) {
                 return 1 * order;
             } else {
-                // If the number of channels/rates is the same, compare numerically
+                // daca numarul de channels/rates este acelasi, comparam numeric
                 for (let i = 0; i < aValue.length; i++) {
                     if (aValue[i] < bValue[i]) {
                         return -1 * order;
@@ -35,7 +35,7 @@ function sortColumn(column) {
                         return 1 * order;
                     }
                 }
-                return 0; // They are equal
+                return 0; // e egal
             }
         } else if (column === 'connectedStations' || column === 'signal') {
             aValue = aText === '-' ? 0 : parseFloat(aText);

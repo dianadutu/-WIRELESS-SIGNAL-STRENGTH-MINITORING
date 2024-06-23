@@ -77,7 +77,7 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
 
 
     private int percentToDbm(int percent) {
-        // Ajustăm această funcție conform nevoilor tale specifice
+        // pentru afisarea in dBm
         return percent * (-50 + 100) / 100 - 100;
     }
 
@@ -141,7 +141,7 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                     // Setează numărul total de rețele vizibile
                     networkSummary.setTotalNetworksVisible(totalNetworksVisible);
 
-                    // Presupunând că ai o listă de NetworkInfo deja populată numită networksList
+                    // networksList din NetworkInfo
                     // Setează lista de rețele în NetworkSummary
                     networkSummary.setNetworks(networkInfos);
                 }
@@ -191,7 +191,7 @@ public class HtmlParserUtil implements CommandLineRunner, Ordered {
                         try {
                             int signalPercent = Integer.parseInt(signal); // Convertim în int
                             int signalDbm = percentToDbm(signalPercent); // Aplicăm conversia
-                            // Aici setezi valoarea în dBm în loc de procent
+                            // valoarea în dBm în loc de procent
                             currentBssidInfo.setSignal(String.valueOf(signalDbm) + " dBm"); // Presupunem că setter-ul acceptă un String
                         } catch (NumberFormatException e) {
                             e.printStackTrace();

@@ -72,11 +72,11 @@ body {
 }
 .sortable-column img {
     position: absolute;
-    right: 5px; /* Ajustează spațiul între imagine și text */
+    right: 5px; /*  spațiul între imagine și text */
     cursor: pointer;
 }
 
-/* Signal color classes */
+
 .signal-weak {
     color: red;
 }

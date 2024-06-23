@@ -10,7 +10,7 @@ public class NetworkInfo {
     private String authentication;
     private String encryption;
     private List<BSSIDInfo> bssids = new ArrayList<>();
-    private Long id; // sau orice alt tip corespunzător
+    private Long id;
 
     public NetworkInfo() {}
 

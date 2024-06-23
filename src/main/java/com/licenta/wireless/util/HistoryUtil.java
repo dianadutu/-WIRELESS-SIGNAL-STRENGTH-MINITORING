@@ -219,7 +219,7 @@ public class HistoryUtil implements CommandLineRunner, Ordered {
                             profile.setAutoSwitch(value);
                             break;
                         case "MAC Randomization":
-                            profile.setMACRandomization(value);
+                            profile.setMacRandomization(value);
                             break;
                     }
                 }

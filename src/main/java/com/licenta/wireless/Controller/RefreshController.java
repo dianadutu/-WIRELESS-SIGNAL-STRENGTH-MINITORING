@@ -17,7 +17,7 @@ public class RefreshController {
 
     @GetMapping("/refresh")
     public String showRefreshPage() {
-        return "refresh"; // Returnează numele paginii HTML pe care dorești să o afișezi (fără extensie .html)
+        return "refresh";
     }
 
     @GetMapping("/api/refresh")

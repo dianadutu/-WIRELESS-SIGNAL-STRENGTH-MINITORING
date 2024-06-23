@@ -1,4 +1,4 @@
-/* topbar.css */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -33,4 +33,100 @@ body {
 
 .topbar button:hover {
     background-color: #555;
+}
+
+/* buton Dropdown */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown (ascuns default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links din dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* schimbam culoarea la dropdown links cand facem hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* meniul dropdown cand facem hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* schimbarea fundalelui la dropdown cand e apasat */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+#confirmSaveProfiles, #cancelSaveProfiles {
+    margin: 5px;
+}
+
+
+/* Stilizare butoane */
+.modal-content button {
+
+    color: white; /* Culoare text */
+    padding: 10px 20px; /* Spațierea internă */
+    border: none; /* Fără bordură */
+    cursor: pointer; /* Cursor pointer la hover */
+    margin: 5px; /* Spațiu între butoane */
+    border-radius: 4px; /* Coloane rotunjite */
+    transition: background-color 0.3s; /* Tranziție culoare de fundal */
+}
+#confirmSaveProfiles{
+    background: forestgreen;
+}
+
+#cancelSaveProfiles{
+    background: #495057;
+}
+#deleteProfiles{
+    background: crimson;
+}
+
+/* Stilizare la hover */
+.modal-content button:hover {
+    background-color: #45a049; /* Culoare de fundal la hover */
 }

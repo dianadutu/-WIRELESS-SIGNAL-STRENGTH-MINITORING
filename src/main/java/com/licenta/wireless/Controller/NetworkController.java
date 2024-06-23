@@ -85,7 +85,7 @@ public class NetworkController {
             return "signal-strong";
         } else if (signalStrength >= -79 && signalStrength <= -59) {
             return "signal-medium";
-        } else if (signalStrength >= -90 && signalStrength <= -80) {
+        } else if (signalStrength >= -92 && signalStrength <= -80) {
             return "signal-weak";
         } else {
             return "";

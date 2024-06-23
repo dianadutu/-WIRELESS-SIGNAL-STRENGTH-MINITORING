@@ -11,7 +11,16 @@
 <div class="topbar">
     <button id="homeButton">Home</button>
     <button id="refreshButton">Refresh</button>
-    <button id="historyButton">History</button>
+
+    <div class="dropdown">
+        <button id="historyButton" class="dropbtn">History</button>
+        <div class="dropdown-content">
+            <a href="#" id="deviceHistoryButton">Device History</a>
+            <a href="#" id="userHistoryButton">User History</a>
+
+        </div>
+    </div>
+
     <button id="moreButton">More Info</button>
     <button id="loginButton">Login</button>
     <button id="logoutButton" style="display: none;">Logout</button>
@@ -43,7 +52,7 @@
     </thead>
     <tbody>
     <tr th:each="network : ${networks}" class="clickable-row" onclick="networkRowClick(this)">
-        <td th:text="${network.ssid != null && !network.ssid.isEmpty() ? network.ssid : 'hidden'}"></td>
+        <td th:text="${network.ssid != null && !network.ssid.isEmpty() ? network.ssid : 'unknown'}"></td>
         <td th:text="${network.bssids[0].signal}"
             th:classappend="${@networkController.getSignalStrengthCssClass(network.bssids[0].signal)}"></td>
         <td th:text="${network.bssids[0].connectedStations != null ? network.bssids[0].connectedStations : '-'}"></td>
@@ -52,6 +61,17 @@
     </tr>
     </tbody>
 </table>
+
+
+<div id="saveProfileModal" class="modal">
+    <div class="modal-content">
+        <h2>Save Profiles</h2>
+        <p>Do you want to save the profiles before viewing User History?</p>
+        <button id="confirmSaveProfiles">Save Profiles</button>
+        <button id="cancelSaveProfiles">Cancel</button>
+    </div>
+</div>
+<!--
 <div id="faq-section">
     <div class="faq-container">
         <h4 class="question" onclick="toggleAnswer('answer1')">Ce sunt rețelele wireless?</h4>
@@ -78,7 +98,7 @@
         </div>
     </div>
 </div>
-
+-->
 <!-- HTML pentru secțiunea cu link-uri utile -->
 
 

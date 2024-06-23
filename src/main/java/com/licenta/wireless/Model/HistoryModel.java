@@ -1,5 +1,3 @@
-/*historymodel var2*/
-
 package com.licenta.wireless.Model;
 
 public class HistoryModel {
@@ -26,7 +24,7 @@ public class HistoryModel {
     private String connectionMode;
     private String networkBroadcast;
     private String autoSwitch;
-    private String MACRandomization;
+    private String macRandomization;
 
     private String eapType;
     private String authCredential;
@@ -253,11 +251,43 @@ public class HistoryModel {
         this.autoSwitch = autoSwitch;
     }
 
-    public String getMACRandomization() {
-        return MACRandomization;
+    public String getMacRandomization() {
+        return macRandomization;
     }
 
-    public void setMACRandomization(String MACRandomization) {
-        this.MACRandomization = MACRandomization;
+    public void setMacRandomization(String macRandomization) {
+        this.macRandomization = macRandomization;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoryModel{" +
+                "profileName='" + profileName + '\'' +
+                ", version=" + version +
+                ", type='" + type + '\'' +
+                ", controlOptions='" + controlOptions + '\'' +
+                ", numberOfSSIDs=" + numberOfSSIDs +
+                ", ssidName='" + ssidName + '\'' +
+                ", networkType='" + networkType + '\'' +
+                ", radioType='" + radioType + '\'' +
+                ", vendorExtension='" + vendorExtension + '\'' +
+                ", authentication='" + authentication + '\'' +
+                ", cipher='" + cipher + '\'' +
+                ", securityKeyPresent=" + securityKeyPresent +
+                ", cost='" + cost + '\'' +
+                ", congested=" + congested +
+                ", approachingDataLimit=" + approachingDataLimit +
+                ", overDataLimit=" + overDataLimit +
+                ", roaming=" + roaming +
+                ", costSource='" + costSource + '\'' +
+                ", connectionMode='" + connectionMode + '\'' +
+                ", networkBroadcast='" + networkBroadcast + '\'' +
+                ", autoSwitch='" + autoSwitch + '\'' +
+                ", macRandomization='" + macRandomization + '\'' +
+                ", eapType='" + eapType + '\'' +
+                ", authCredential='" + authCredential + '\'' +
+                ", credentialsConfigured='" + credentialsConfigured + '\'' +
+                ", cacheUserInfo='" + cacheUserInfo + '\'' +
+                '}';
     }
 }

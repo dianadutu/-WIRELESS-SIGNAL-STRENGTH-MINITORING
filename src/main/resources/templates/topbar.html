@@ -10,7 +10,13 @@
 <div class="topbar">
   <button id="homeButton">Home</button>
   <button id="refreshButton">Refresh</button>
-  <button id="historyButton">History</button>
+  <div class="dropdown">
+    <button id="historyButton" class="dropbtn">History</button>
+    <div class="dropdown-content">
+      <a href="#" id="deviceHistoryButton">Device History</a>
+      <a href="#" id="userHistoryButton">User History</a>
+    </div>
+  </div>
   <button id="moreButton">More Info</button>
   <button id="loginButton">Login</button>
   <button id="logoutButton" style="display: none;">Logout</button>

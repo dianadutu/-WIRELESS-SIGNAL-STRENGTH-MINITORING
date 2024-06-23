@@ -4,10 +4,16 @@ import com.licenta.wireless.Entity.ConnectionHistoryEntity;
 import com.licenta.wireless.Entity.UsersEntity;
 import com.licenta.wireless.Repository.ConnectionHistoryRepository;
 import com.licenta.wireless.Repository.UsersRepository;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +22,94 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
 
     private final UsersRepository usersRepository;
     private final ConnectionHistoryRepository connectionHistoryRepository;
-
     @Autowired
-    public LoginController(UsersRepository usersRepository, ConnectionHistoryRepository connectionHistoryRepository) {
+    private JavaMailSender javaMailSender;
+    private final Map<String, String> resetCodes = new HashMap<>();
+    @Autowired
+    public LoginController(UsersRepository usersRepository, ConnectionHistoryRepository connectionHistoryRepository, JavaMailSender emailSender) {
         this.usersRepository = usersRepository;
         this.connectionHistoryRepository = connectionHistoryRepository;
+        this.javaMailSender = emailSender;
     }
+
+    @GetMapping("/forgotpassword")
+    public String showForgotPasswordPage() {
+        return "forgotpassword"; // Acesta este numele paginii HTML fără extensie
+    }
+
+    @PostMapping("/send-reset-code")
+    public ResponseEntity<?> sendResetCode(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        System.out.println("Received email: " + email);  // Logare pentru verificare
+        UsersEntity user = usersRepository.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Email not found."));
+        }
+        // Generează un cod random din 5 cifre
+        String resetCode = String.format("%05d", new SecureRandom().nextInt(100000));
+        resetCodes.put(email, resetCode);
+        System.out.println("Generated reset code: " + resetCode);
+
+        // Trimite email cu codul de resetare
+        try {
+            sendResetCodeByEmail(email, resetCode);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("message", "Failed to send reset code."));
+        }
+
+        return ResponseEntity.ok(Collections.singletonMap("success", true));
+    }
+
+    public void sendResetCodeByEmail(String recipientEmail, String resetCode) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("diana.dutuu@outlook.com");  // Use the authorized sender email
+            helper.setTo(recipientEmail);
+            helper.setSubject("Password Reset Code");
+            helper.setText("Your reset code is: " + resetCode);
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle exception
+        }
+    }
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+        String resetCode = request.get("resetCode");
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        if (!resetCodes.containsKey(email) || !resetCodes.get(email).equals(resetCode)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Invalid reset code."));
+        }
+        // Criptăm parola
+        String encryptedPassword = encrypt(newPassword);
+
+        // Actualizăm parola utilizatorului
+        UsersEntity user = usersRepository.findByEmail(email);
+        user.setPassword(encryptedPassword);
+        usersRepository.save(user);
+
+        // Ștergem codul de resetare utilizat
+        resetCodes.remove(email);
+
+        return ResponseEntity.ok(Collections.singletonMap("success", true));
+    }
+
+
 
     @GetMapping("/register")
     public String showRegistrationPage() {
@@ -80,7 +160,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public void processLogin(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws IOException {
+    public void processLogin(@RequestParam String email, @RequestParam String password, HttpServletResponse response, HttpServletRequest request) throws IOException {
         UsersEntity user = usersRepository.findByEmail(email);
 
         if (user != null) {
@@ -89,11 +169,12 @@ public class LoginController {
             System.out.println("Encrypted Password from input: " + encryptedPassword);
 
             if (user.getPassword().equals(encryptedPassword)) {
-                saveConnectionHistory(user, "ProfileName", 1, "Type", "ControlOptions", 1, "SSIDName",
-                        "NetworkType", "RadioType", "VendorExtension", "Authentication", "Cipher", true,
-                        "Cost", true, true, true, true, "CostSource", "ConnectionMode", "NetworkBroadcast",
-                        "AutoSwitch", "MACRandomization", "EAPType", "AuthCredential", "CredentialsConfigured",
-                        "CacheUserInfo");
+
+                //sa ia id ul cand ne logam
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", user.getId());
+                System.out.println("USER ID IS" + session.getAttribute("userId"));
+
 
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -109,7 +190,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout() {
-        // Implementarea deconectării, dacă este necesar
+        // Implementarea deconectării
         return "redirect:/login";
     }
 
@@ -155,6 +236,8 @@ public class LoginController {
         connectionHistoryRepository.save(connectionHistory);
     }
 
+
+
     // Metoda de criptare
     public static String encrypt(String input) {
         try {
@@ -174,4 +257,6 @@ public class LoginController {
             return null;
         }
     }
+
+
 }

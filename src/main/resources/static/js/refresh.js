@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (data.success) {
                 setTimeout(() => {
                     window.location.href = '/home'; // Redirecționează către pagina principală după terminarea refresh-ului
-                }, 1000); // Așteaptă 1 secunde înainte de redirecționare
+                }, 1000); // Așteaptă 1 secunda înainte de redirecționare
             } else {
                 // Manevrarea erorilor
                 console.error('Refresh failed');

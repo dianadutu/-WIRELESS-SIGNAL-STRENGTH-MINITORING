@@ -34,8 +34,8 @@ document.getElementById('create-account-form').addEventListener('submit', async 
         if (response.ok && data.success) {
             document.getElementById('success-message').textContent = 'Account created successfully!';
             setTimeout(() => {
-                window.location.href = '/login'; // Redirect to the login page after a short delay
-            }, 2000); // Redirect after 2 seconds
+                window.location.href = '/login'; // Redirectionare catre login dupa un mic delay
+            }, 1000); // redirectionare dupa 1 secunda
         } else {
             const errorMessage = data.message || 'Something went wrong.';
             document.getElementById('error-message').textContent = errorMessage;
