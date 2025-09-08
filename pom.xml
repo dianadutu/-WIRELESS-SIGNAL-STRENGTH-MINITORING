@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.5.3</version> <!-- Asigură-te că folosești o versiune actuală -->
+			<version>1.5.3</version> 
 		</dependency>
 
 		<!-- pt caracterele speciale cum e apostrful -->
@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
-			<version>5.0.1</version> <!-- Versiunea poate varia, asigurați-vă că aveți cea mai recentă compatibilă -->
+			<version>5.0.1</version> 
 		</dependency>
 
 
